@@ -53,6 +53,6 @@ public class Animal {
     }
 
     public int getCalculatedY() {
-        return this.y + this.xOffset;
+        return this.y + this.yOffset;
     }
 }
