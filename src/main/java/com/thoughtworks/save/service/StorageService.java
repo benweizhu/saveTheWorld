@@ -1,5 +1,6 @@
 package com.thoughtworks.save.service;
 
+import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
 import com.thoughtworks.save.parser.StorageParser;
 
@@ -7,6 +8,8 @@ import java.util.List;
 
 public class StorageService {
 
+    private static final String SPACE = " ";
+    private static final String ENTER = "\n";
     private StorageParser storageParser;
 
     public StorageService(StorageParser storageParser) {
@@ -20,12 +23,17 @@ public class StorageService {
     }
 
     private String concatSnapshotResult(Snapshot snapshot) {
-        return "cat1 15 12\ncat2 2 3";
+        StringBuilder stringBuffer = new StringBuilder();
+        List<Animal> animals = snapshot.getAnimals();
+        for (Animal animal : animals) {
+            stringBuffer.append(animal.getName() + SPACE + animal.getCalculatedX() + SPACE + animal.getCalculatedY() + ENTER);
+        }
+        return stringBuffer.toString();
     }
 
     private Snapshot findSnapshotById(List<Snapshot> snapshots, String id) {
         for (Snapshot snapshot : snapshots) {
-            if (id.equals(snapshot.getId())) {
+            if (snapshot.getId().contains(id)) {
                 return snapshot;
             }
         }

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -57,6 +58,8 @@ public class StorageParserTest {
 
         List<Snapshot> snapshots = storageParser.parse(historyData);
         assertThat(snapshots.size(), is(2));
+        assertThat(snapshots.get(0).getId(), containsString("e4e87cb2-8e9a-4749-abb6-26c59344dfee"));
+        assertThat(snapshots.get(1).getId(), containsString("351055db-33e6-4f9b-bfe1-16f1ac446ac1"));
     }
 
     @Test
@@ -93,7 +96,16 @@ public class StorageParserTest {
                         "cat1 12 8 3 4\n";
 
         List<Snapshot> snapshots = storageParser.parse(historyData);
-        List<Animal> animals = snapshots.get(1).getAnimals();
+
+        Snapshot snapshot = snapshots.get(0);
+        snapshot.getAnimals().get(0);
+        assertThat(snapshot.getAnimals().size(),is(1));
+        assertThat(snapshot.getAnimals().get(0).getName(), is("cat1"));
+        assertThat(snapshot.getAnimals().get(0).getX(), is(10));
+        assertThat(snapshot.getAnimals().get(0).getY(), is(9));
+
+        Snapshot snapshotSecond = snapshots.get(1);
+        List<Animal> animals = snapshotSecond.getAnimals();
         Animal animal = animals.get(0);
         assertThat(animals.size(), is(2));
         assertThat(animal, is(notNullValue()));
@@ -102,6 +114,12 @@ public class StorageParserTest {
         assertThat(animal.getY(), is(9));
         assertThat(animal.getxOffset(), is(2));
         assertThat(animal.getyOffset(), is(-1));
+
+        Animal animalSecond = animals.get(1);
+        assertThat(animalSecond, is(notNullValue()));
+        assertThat(animalSecond.getName(), is("cat2"));
+        assertThat(animalSecond.getX(), is(2));
+        assertThat(animalSecond.getY(), is(3));
     }
 
 }
