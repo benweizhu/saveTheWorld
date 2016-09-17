@@ -40,6 +40,7 @@ public class StorageParserTest {
 
         List<Snapshot> snapshots = storageParser.parse(historyData);
         assertThat(snapshots.size(), is(3));
+        assertThat(snapshots.get(0).getId(),is("e4e87cb2-8e9a-4749-abb6-26c59344dfee"));
     }
 
     @Test
@@ -92,14 +93,11 @@ public class StorageParserTest {
 
         List<Snapshot> snapshots = storageParser.parse(historyData);
         assertThat(snapshots.get(1).getAnimal(), is(notNullValue()));
-//        assertThat(snapshots.get(1).getAnimal().getName(), is("cat1"));
-//        assertThat(snapshots.get(1).getAnimal().getX(), is(10));
-//        assertThat(snapshots.get(1).getAnimal().getY(), is(9));
-//        assertThat(snapshots.get(1).getAnimal().getxOffset(), is(2));
-//        assertThat(snapshots.get(1).getAnimal().getyOffset(), is(-1));
+        assertThat(snapshots.get(1).getAnimal().getName(), is("cat1"));
+        assertThat(snapshots.get(1).getAnimal().getX(), is(10));
+        assertThat(snapshots.get(1).getAnimal().getY(), is(9));
+        assertThat(snapshots.get(1).getAnimal().getxOffset(), is(2));
+        assertThat(snapshots.get(1).getAnimal().getyOffset(), is(-1));
     }
-
-
-
 
 }

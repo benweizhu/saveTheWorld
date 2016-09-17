@@ -6,6 +6,7 @@ public class Snapshot {
 
     private Date timeStamp;
     private Animal animal;
+    private String id;
 
     public Date getTimeStamp() {
         return timeStamp;
@@ -21,5 +22,13 @@ public class Snapshot {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }
