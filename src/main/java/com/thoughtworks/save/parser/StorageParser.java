@@ -9,9 +9,16 @@ public class StorageParser {
 
     public List<Snapshot> parse(String historyData) {
         ArrayList<Snapshot> snapshots = new ArrayList<>();
-        snapshots.add(new Snapshot());
-        snapshots.add(new Snapshot());
-        snapshots.add(new Snapshot());
+        String[] historyDataRows = historyData.split("\n");
+        for (String historyDataRow : historyDataRows) {
+            if(isIdFormat(historyDataRow)){
+                snapshots.add(new Snapshot());
+            }
+        }
         return snapshots;
+    }
+
+    private boolean isIdFormat(String historyDataRow) {
+        return historyDataRow.matches("([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)");
     }
 }
