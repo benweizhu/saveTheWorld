@@ -15,6 +15,7 @@ public class StorageParser {
 
     private static final String ID_FORMAT = "([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)";
     private static final String ANIMAL_FORMAT = "([0-9a-zA-Z]*) ((-|\\+)?\\d+) ((-|\\+)?\\d+) ((-|\\+)?\\d+) ((-|\\+)?\\d+)";
+    private static final String ANIMAL_NO_OFFSET_FORMAT = "([0-9a-zA-Z]*) ((-|\\+)?\\d+) ((-|\\+)?\\d+)";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     private static final String SPACE = " ";
     private static final int FIRST_TIME_SHOW_FORMAT_LENGTH = 3;
@@ -49,7 +50,7 @@ public class StorageParser {
 
     private void parseAnimal(Snapshot snapshot, String historyDataRow) {
         if (isAnimalFormat(historyDataRow)) {
-            snapshot.setAnimal(parseAnimal(historyDataRow));
+            snapshot.addAnimal(parseAnimal(historyDataRow));
         }
     }
 
@@ -67,7 +68,7 @@ public class StorageParser {
     }
 
     private boolean isAnimalFormat(String historyDataRow) {
-        return historyDataRow.matches(ANIMAL_FORMAT);
+        return historyDataRow.matches(ANIMAL_FORMAT) || historyDataRow.matches(ANIMAL_NO_OFFSET_FORMAT);
     }
 
     private Object getTimeStamp(String historyDataRow) {

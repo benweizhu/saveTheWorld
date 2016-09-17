@@ -1,11 +1,13 @@
 package com.thoughtworks.save.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Snapshot {
 
     private Date timeStamp;
-    private Animal animal;
+    private List<Animal> animals = new ArrayList<>();
     private String id;
 
     public Date getTimeStamp() {
@@ -16,12 +18,12 @@ public class Snapshot {
         this.timeStamp = timeStamp;
     }
 
-    public Animal getAnimal() {
-        return animal;
+    public List<Animal> getAnimals() {
+        return animals;
     }
 
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
+    public void addAnimal(Animal animal) {
+        this.animals.add(animal);
     }
 
     public void setId(String id) {

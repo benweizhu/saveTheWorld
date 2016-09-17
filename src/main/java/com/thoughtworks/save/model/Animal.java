@@ -47,4 +47,12 @@ public class Animal {
     public void setyOffset(int yOffset) {
         this.yOffset = yOffset;
     }
+
+    public int getCalculatedX() {
+        return this.x + this.xOffset;
+    }
+
+    public int getCalculatedY() {
+        return this.y + this.xOffset;
+    }
 }

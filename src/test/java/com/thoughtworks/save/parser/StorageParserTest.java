@@ -1,5 +1,6 @@
 package com.thoughtworks.save.parser;
 
+import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,12 +93,15 @@ public class StorageParserTest {
                         "cat1 12 8 3 4\n";
 
         List<Snapshot> snapshots = storageParser.parse(historyData);
-        assertThat(snapshots.get(1).getAnimal(), is(notNullValue()));
-        assertThat(snapshots.get(1).getAnimal().getName(), is("cat1"));
-        assertThat(snapshots.get(1).getAnimal().getX(), is(10));
-        assertThat(snapshots.get(1).getAnimal().getY(), is(9));
-        assertThat(snapshots.get(1).getAnimal().getxOffset(), is(2));
-        assertThat(snapshots.get(1).getAnimal().getyOffset(), is(-1));
+        List<Animal> animals = snapshots.get(1).getAnimals();
+        Animal animal = animals.get(0);
+        assertThat(animals.size(), is(2));
+        assertThat(animal, is(notNullValue()));
+        assertThat(animal.getName(), is("cat1"));
+        assertThat(animal.getX(), is(10));
+        assertThat(animal.getY(), is(9));
+        assertThat(animal.getxOffset(), is(2));
+        assertThat(animal.getyOffset(), is(-1));
     }
 
 }
