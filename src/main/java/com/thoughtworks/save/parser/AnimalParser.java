@@ -2,8 +2,8 @@ package com.thoughtworks.save.parser;
 
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
-import com.thoughtworks.save.validator.AnimalValidator;
 
+import static com.thoughtworks.save.validator.AnimalValidator.isValid;
 import static java.lang.Integer.parseInt;
 
 public class AnimalParser {
@@ -19,7 +19,7 @@ public class AnimalParser {
     private static final int Y_OFFSET_FIELD_INDEX = 4;
 
     public void parseAnimal(Snapshot snapshot, String historyDataRow) {
-        if (AnimalValidator.isValid(historyDataRow)) {
+        if (isValid(historyDataRow)) {
             snapshot.addOrOverrideAnimal(parseAnimalHistoryData(historyDataRow));
         }
     }

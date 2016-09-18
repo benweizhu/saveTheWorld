@@ -19,7 +19,7 @@ public class StorageService {
     }
 
     public String getSnapShot(String historyData, String id) {
-        List<Snapshot> snapshots = null;
+        List<Snapshot> snapshots;
         try {
             snapshots = storageParser.parse(historyData);
         } catch (InvalidFormatException e) {
