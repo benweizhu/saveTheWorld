@@ -6,12 +6,12 @@ import com.thoughtworks.save.model.Snapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.thoughtworks.save.validator.IdValidator.isValid;
+
 public class IdParser {
 
-    private static final String ID_FORMAT = "([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)+-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)-([0-9a-zA-Z]*)";
-
     public Snapshot parseIdAndCreateNewSnapshot(ArrayList<Snapshot> snapshots, Snapshot renewSnapshot, String historyDataRow) {
-        if (createNewSnapshotIfIdFormatMatched(historyDataRow)) {
+        if (isValid(historyDataRow)) {
             List<Animal> cloneAnimals = cloneList(renewSnapshot.getAnimals());
             renewSnapshot = new Snapshot();
             renewSnapshot.setId(historyDataRow);
@@ -29,7 +29,4 @@ public class IdParser {
         return cloneAnimals;
     }
 
-    private  boolean createNewSnapshotIfIdFormatMatched(String historyDataRow) {
-        return historyDataRow.matches(ID_FORMAT);
-    }
 }

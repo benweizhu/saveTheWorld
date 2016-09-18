@@ -1,5 +1,6 @@
 package com.thoughtworks.save.service;
 
+import com.thoughtworks.save.exception.InvalidFormatException;
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
 import com.thoughtworks.save.parser.StorageParser;
@@ -18,7 +19,12 @@ public class StorageService {
     }
 
     public String getSnapShot(String historyData, String id) {
-        List<Snapshot> snapshots = storageParser.parse(historyData);
+        List<Snapshot> snapshots = null;
+        try {
+            snapshots = storageParser.parse(historyData);
+        } catch (InvalidFormatException e) {
+            return e.getMessage();
+        }
         Snapshot snapshot = findSnapshotById(snapshots, id);
         return concatSnapshotResult(snapshot);
     }

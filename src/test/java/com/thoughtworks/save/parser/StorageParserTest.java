@@ -1,5 +1,6 @@
 package com.thoughtworks.save.parser;
 
+import com.thoughtworks.save.exception.InvalidFormatException;
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveTwoSnapshotWhenParseHistoryData() {
+    public void shouldHaveTwoSnapshotWhenParseHistoryData() throws InvalidFormatException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -52,7 +53,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveThreeSnapshotWhenParseHistoryData() {
+    public void shouldHaveThreeSnapshotWhenParseHistoryData() throws InvalidFormatException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -69,7 +70,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveTimeStampInSnapshot() throws ParseException {
+    public void shouldHaveTimeStampInSnapshot() throws ParseException, InvalidFormatException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -88,7 +89,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveAnimalInSnapshot() throws ParseException {
+    public void shouldHaveAnimalInSnapshot() throws ParseException, InvalidFormatException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -126,6 +127,23 @@ public class StorageParserTest {
         assertThat(animalSecond.getName(), is("cat2"));
         assertThat(animalSecond.getX(), is(2));
         assertThat(animalSecond.getY(), is(3));
+    }
+
+    @Test(expected = InvalidFormatException.class)
+    public void shouldThrowInvalidFormatExceptionWhenIdIsInvalid() throws InvalidFormatException {
+        historyData =
+                "e4e87cb2-8e9a-4749\n" +
+                        "2016/09/02 22:30:46\n" +
+                        "cat1 10 9\n" +
+                        "351055db-33e6-4f9b-bfe1-16f1ac446ac1\n" +
+                        "2016/09/02 22:30:52\n" +
+                        "cat1 10 9 2 -1\n" +
+                        "cat2 2 3\n" +
+                        "dcfa0c7a-5855-4ed2-bc8c-4accae8bd155\n" +
+                        "2016/09/02 22:31:02\n" +
+                        "cat1 12 8 3 4\n";
+
+        storageParser.parse(historyData);
     }
 
 }
