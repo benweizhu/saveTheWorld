@@ -11,7 +11,7 @@ public class TimeStampParser {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
-    public void parseTimeStamp(Snapshot snapshot, String historyDataRow) {
+    public void parseAndAddToTimeStampIfMatch(Snapshot snapshot, String historyDataRow) {
         if (isValid(historyDataRow)) {
             try {
                 snapshot.setTimeStamp(DATE_FORMAT.parse(historyDataRow));

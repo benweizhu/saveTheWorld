@@ -26,19 +26,19 @@ public class StorageParser {
     }
 
     public List<Snapshot> parse(String historyData) throws InvalidFormatException, ConflictException {
-        ArrayList<Snapshot> snapshots = new ArrayList<>();
+        List<Snapshot> convertedSnapshots = new ArrayList<>();
         String[] historyDataRows = historyData.split(NEW_LINE);
         Snapshot newSnapshot = new Snapshot();
         for (String historyDataRow : historyDataRows) {
-            throwInvalidFormatExceptionIfTrue(historyDataRow);
-            newSnapshot = idParser.parseIdAndCreateNewSnapshot(snapshots, newSnapshot, historyDataRow);
-            timeStampParser.parseTimeStamp(newSnapshot, historyDataRow);
-            animalParser.parseAnimal(newSnapshot, historyDataRow);
+            throwInvalidFormatExceptionIfFormatNotMatch(historyDataRow);
+            newSnapshot = idParser.parseIdAndCreateNewSnapshotIfMatch(convertedSnapshots, newSnapshot, historyDataRow);
+            timeStampParser.parseAndAddToTimeStampIfMatch(newSnapshot, historyDataRow);
+            animalParser.parseAndAddToAnimalsIfMatch(newSnapshot, historyDataRow);
         }
-        return snapshots;
+        return convertedSnapshots;
     }
 
-    private void throwInvalidFormatExceptionIfTrue(String historyDataRow) throws InvalidFormatException {
+    private void throwInvalidFormatExceptionIfFormatNotMatch(String historyDataRow) throws InvalidFormatException {
         if (isInvalidFormat(historyDataRow)) {
             throw new InvalidFormatException(INVALID_FORMAT_MESSAGE);
         }

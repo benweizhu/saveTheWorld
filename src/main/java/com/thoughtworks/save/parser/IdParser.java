@@ -10,15 +10,15 @@ import static com.thoughtworks.save.validator.IdValidator.isValid;
 
 public class IdParser {
 
-    public Snapshot parseIdAndCreateNewSnapshot(ArrayList<Snapshot> snapshots, Snapshot renewSnapshot, String historyDataRow) {
+    public Snapshot parseIdAndCreateNewSnapshotIfMatch(List<Snapshot> snapshots, Snapshot newSnapshot, String historyDataRow) {
         if (isValid(historyDataRow)) {
-            List<Animal> cloneAnimals = cloneList(renewSnapshot.getAnimals());
-            renewSnapshot = new Snapshot();
-            renewSnapshot.setId(historyDataRow);
-            renewSnapshot.setAnimals(cloneAnimals);
-            snapshots.add(renewSnapshot);
+            List<Animal> cloneRemainedAnimalsRecords = cloneList(newSnapshot.getAnimals());
+            newSnapshot = new Snapshot();
+            newSnapshot.setId(historyDataRow);
+            newSnapshot.setAnimals(cloneRemainedAnimalsRecords);
+            snapshots.add(newSnapshot);
         }
-        return renewSnapshot;
+        return newSnapshot;
     }
 
     private  List<Animal> cloneList(List<Animal> animals) {

@@ -19,7 +19,7 @@ public class AnimalParser {
     private static final int X_OFFSET_FIELD_INDEX = 3;
     private static final int Y_OFFSET_FIELD_INDEX = 4;
 
-    public void parseAnimal(Snapshot snapshot, String historyDataRow) throws ConflictException {
+    public void parseAndAddToAnimalsIfMatch(Snapshot snapshot, String historyDataRow) throws ConflictException {
         if (isValid(historyDataRow)) {
             snapshot.addOrOverrideAnimal(parseAnimalHistoryData(historyDataRow));
         }

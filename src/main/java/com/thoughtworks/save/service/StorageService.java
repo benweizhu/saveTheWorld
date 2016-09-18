@@ -29,7 +29,8 @@ public class StorageService {
         } catch (ConflictException e) {
             return e.getMessage();
         }
-        return concatSnapshotResult(findSnapshotById(snapshots, id));
+        Snapshot selectedSnapshot = findSnapshotById(snapshots, id);
+        return concatSnapshotResult(selectedSnapshot);
     }
 
     private String concatSnapshotResult(Snapshot snapshot) {

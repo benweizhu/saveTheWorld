@@ -10,13 +10,23 @@ import com.thoughtworks.save.service.StorageService;
 public class Application {
 
     public static void main(String[] args) {
-        String filePath = isFilePathArgValid(args) ? "historyData.txt" : args[0];
-        String id = isIdArgValid(args) ? "dcfa0c7a-5855-4ed2-bc8c-4accae8bd155" : args[1];
-
         StorageService storageService = new StorageService(new StorageParser(new IdParser(), new TimeStampParser(), new AnimalParser()));
-        String result = storageService.getSnapShot(new FileProcessor().readFileToString(filePath), id);
+
+        String filePath = getFilePathWithDefaultValue(args, "historyData.txt");
+        String id = getIdWithDefaultValue(args, "dcfa0c7a-5855-4ed2-bc8c-4accae8bd155");
+
+        String historyData = new FileProcessor().readFileToString(filePath);
+        String result = storageService.getSnapShot(historyData, id);
 
         System.out.println(result);
+    }
+
+    private static String getIdWithDefaultValue(String[] args, String id) {
+        return isIdArgValid(args) ? id : args[1];
+    }
+
+    private static String getFilePathWithDefaultValue(String[] args, String defaultValue) {
+        return isFilePathArgValid(args) ? defaultValue : args[0];
     }
 
     private static boolean isIdArgValid(String[] args) {
