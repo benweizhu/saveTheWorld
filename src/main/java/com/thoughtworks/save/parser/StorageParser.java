@@ -11,6 +11,9 @@ import java.util.List;
 
 public class StorageParser {
 
+    private static final String INVALID_FORMAT_MESSAGE = "Invalid format.";
+    private static final String NEW_LINE = "\n";
+
     private IdParser idParser;
     private TimeStampParser timeStampParser;
     private AnimalParser animalParser;
@@ -23,17 +26,21 @@ public class StorageParser {
 
     public List<Snapshot> parse(String historyData) throws InvalidFormatException {
         ArrayList<Snapshot> snapshots = new ArrayList<>();
-        String[] historyDataRows = historyData.split("\n");
+        String[] historyDataRows = historyData.split(NEW_LINE);
         Snapshot newSnapshot = new Snapshot();
         for (String historyDataRow : historyDataRows) {
-            if (isInvalidFormat(historyDataRow)) {
-                throw new InvalidFormatException("Invalid format.");
-            }
+            throwInvalidFormatExceptionIfTrue(historyDataRow);
             newSnapshot = idParser.parseIdAndCreateNewSnapshot(snapshots, newSnapshot, historyDataRow);
             timeStampParser.parseTimeStamp(newSnapshot, historyDataRow);
             animalParser.parseAnimal(newSnapshot, historyDataRow);
         }
         return snapshots;
+    }
+
+    private void throwInvalidFormatExceptionIfTrue(String historyDataRow) throws InvalidFormatException {
+        if (isInvalidFormat(historyDataRow)) {
+            throw new InvalidFormatException(INVALID_FORMAT_MESSAGE);
+        }
     }
 
     private boolean isInvalidFormat(String historyDataRow) {
