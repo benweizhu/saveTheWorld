@@ -47,11 +47,7 @@ public class StorageParser {
     private static List<Animal> cloneList(List<Animal> animals) {
         List<Animal> cloneAnimals = new ArrayList<>(animals.size());
         for (Animal animal : animals) {
-            try {
-                cloneAnimals.add(animal.clone());
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            cloneAnimals.add(animal.deepClone());
         }
         return cloneAnimals;
     }
@@ -65,7 +61,7 @@ public class StorageParser {
 
     private void parseAnimal(Snapshot snapshot, String historyDataRow) {
         if (isAnimalFormat(historyDataRow)) {
-            snapshot.addAnimal(parseAnimal(historyDataRow));
+            snapshot.addOrOverrideAnimal(parseAnimal(historyDataRow));
         }
     }
 

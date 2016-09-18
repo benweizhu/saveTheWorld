@@ -22,19 +22,25 @@ public class Snapshot {
         return animals;
     }
 
-    public void addAnimal(Animal animal) {
-        boolean breakPoint = false;
+    public void addOrOverrideAnimal(Animal animal) {
+        boolean hasExistedAnimal = false;
         for (Animal existedAnimal : animals) {
-            if(animal.getName().equals(existedAnimal.getName())){
-                existedAnimal.setX(animal.getX());
-                existedAnimal.setY(animal.getY());
-                existedAnimal.setxOffset(animal.getxOffset());
-                existedAnimal.setyOffset(animal.getyOffset());
-                breakPoint = true;
-            }
+            hasExistedAnimal = overrideIfExisted(animal, hasExistedAnimal, existedAnimal);
         }
-        if(breakPoint) return;
-        this.animals.add(animal);
+        if (!hasExistedAnimal) {
+            this.animals.add(animal);
+        }
+    }
+
+    private boolean overrideIfExisted(Animal animal, boolean hasExistedAnimal, Animal existedAnimal) {
+        if (existedAnimal.getName().equals(animal.getName())) {
+            existedAnimal.setX(animal.getX());
+            existedAnimal.setY(animal.getY());
+            existedAnimal.setxOffset(animal.getxOffset());
+            existedAnimal.setyOffset(animal.getyOffset());
+            hasExistedAnimal = true;
+        }
+        return hasExistedAnimal;
     }
 
     public void setAnimals(List<Animal> animals) {
