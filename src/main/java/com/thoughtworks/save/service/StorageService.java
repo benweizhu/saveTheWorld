@@ -10,6 +10,7 @@ public class StorageService {
 
     private static final String SPACE = " ";
     private static final String ENTER = "\n";
+
     private StorageParser storageParser;
 
     public StorageService(StorageParser storageParser) {

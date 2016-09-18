@@ -1,3 +1,5 @@
+package com.thoughtworks.save.service;
+
 import com.thoughtworks.save.parser.AnimalParser;
 import com.thoughtworks.save.parser.IdParser;
 import com.thoughtworks.save.parser.StorageParser;
