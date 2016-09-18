@@ -9,9 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class StorageParserTest {
@@ -19,10 +17,18 @@ public class StorageParserTest {
     private String historyData;
     private StorageParser storageParser;
     private SimpleDateFormat simpleDateFormat;
+    private IdParser idParser;
+    private TimeStampParser timeStampParser;
+    private AnimalParser animalParser;
 
     @Before
     public void setUp() throws Exception {
-        storageParser = new StorageParser();
+        idParser = new IdParser();
+        timeStampParser = new TimeStampParser();
+        animalParser = new AnimalParser();
+
+        storageParser = new StorageParser(idParser, timeStampParser, animalParser);
+
         simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
     }
 

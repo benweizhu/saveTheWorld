@@ -1,4 +1,7 @@
+import com.thoughtworks.save.parser.AnimalParser;
+import com.thoughtworks.save.parser.IdParser;
 import com.thoughtworks.save.parser.StorageParser;
+import com.thoughtworks.save.parser.TimeStampParser;
 import com.thoughtworks.save.service.StorageService;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,10 +12,18 @@ import static org.junit.Assert.assertThat;
 public class StorageServiceTest {
 
     private StorageService storageService;
+    private IdParser idParser;
+    private TimeStampParser timeStampParser;
+    private AnimalParser animalParser;
+    private StorageParser storageParser;
 
     @Before
     public void setUp() throws Exception {
-        storageService = new StorageService(new StorageParser());
+        idParser = new IdParser();
+        timeStampParser = new TimeStampParser();
+        animalParser = new AnimalParser();
+        storageParser = new StorageParser(idParser, timeStampParser, animalParser);
+        storageService = new StorageService(storageParser);
     }
 
     @Test
