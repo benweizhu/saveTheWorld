@@ -1,5 +1,7 @@
 # saveTheWorld
 
+[![Build Status](https://travis-ci.org/benweizhu/saveTheWorld.svg?branch=master)](https://travis-ci.org/benweizhu/saveTheWorld)
+
 ./gradlew clean build
 
 cd build/libs
