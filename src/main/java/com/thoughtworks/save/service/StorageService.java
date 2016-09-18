@@ -7,10 +7,11 @@ import com.thoughtworks.save.parser.StorageParser;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class StorageService {
 
-    private static final String SPACE = " ";
-    private static final String ENTER = "\n";
+    private static final String outputFormat = "%s %d %d\n";
 
     private StorageParser storageParser;
 
@@ -25,17 +26,16 @@ public class StorageService {
         } catch (InvalidFormatException e) {
             return e.getMessage();
         }
-        Snapshot snapshot = findSnapshotById(snapshots, id);
-        return concatSnapshotResult(snapshot);
+        return concatSnapshotResult(findSnapshotById(snapshots, id));
     }
 
     private String concatSnapshotResult(Snapshot snapshot) {
         StringBuilder stringBuffer = new StringBuilder();
         List<Animal> animals = snapshot.getAnimals();
         for (Animal animal : animals) {
-            stringBuffer.append(animal.getName() + SPACE + animal.getCalculatedX() + SPACE + animal.getCalculatedY() + ENTER);
+            stringBuffer.append(format(outputFormat, animal.getName(), animal.getCalculatedX(), animal.getCalculatedY()));
         }
-        return stringBuffer.toString();
+        return removeLastNewLineSymbol(stringBuffer.toString());
     }
 
     private Snapshot findSnapshotById(List<Snapshot> snapshots, String id) {
@@ -45,5 +45,9 @@ public class StorageService {
             }
         }
         return null;
+    }
+
+    private String removeLastNewLineSymbol(String output) {
+        return output.substring(0, output.length() - 1);
     }
 }
