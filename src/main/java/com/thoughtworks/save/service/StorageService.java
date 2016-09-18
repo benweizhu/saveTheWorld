@@ -1,5 +1,6 @@
 package com.thoughtworks.save.service;
 
+import com.thoughtworks.save.exception.ConflictException;
 import com.thoughtworks.save.exception.InvalidFormatException;
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
@@ -24,6 +25,8 @@ public class StorageService {
         try {
             snapshots = storageParser.parse(historyData);
         } catch (InvalidFormatException e) {
+            return e.getMessage();
+        } catch (ConflictException e) {
             return e.getMessage();
         }
         return concatSnapshotResult(findSnapshotById(snapshots, id));

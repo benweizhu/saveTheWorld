@@ -1,5 +1,6 @@
 package com.thoughtworks.save.parser;
 
+import com.thoughtworks.save.exception.ConflictException;
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
 
@@ -18,7 +19,7 @@ public class AnimalParser {
     private static final int X_OFFSET_FIELD_INDEX = 3;
     private static final int Y_OFFSET_FIELD_INDEX = 4;
 
-    public void parseAnimal(Snapshot snapshot, String historyDataRow) {
+    public void parseAnimal(Snapshot snapshot, String historyDataRow) throws ConflictException {
         if (isValid(historyDataRow)) {
             snapshot.addOrOverrideAnimal(parseAnimalHistoryData(historyDataRow));
         }

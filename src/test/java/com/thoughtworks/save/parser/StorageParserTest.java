@@ -1,5 +1,6 @@
 package com.thoughtworks.save.parser;
 
+import com.thoughtworks.save.exception.ConflictException;
 import com.thoughtworks.save.exception.InvalidFormatException;
 import com.thoughtworks.save.model.Animal;
 import com.thoughtworks.save.model.Snapshot;
@@ -34,7 +35,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveTwoSnapshotWhenParseHistoryData() throws InvalidFormatException {
+    public void shouldHaveTwoSnapshotWhenParseHistoryData() throws InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -53,7 +54,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveThreeSnapshotWhenParseHistoryData() throws InvalidFormatException {
+    public void shouldHaveThreeSnapshotWhenParseHistoryData() throws InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -70,7 +71,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveTimeStampInSnapshot() throws ParseException, InvalidFormatException {
+    public void shouldHaveTimeStampInSnapshot() throws ParseException, InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -89,7 +90,7 @@ public class StorageParserTest {
     }
 
     @Test
-    public void shouldHaveAnimalInSnapshot() throws ParseException, InvalidFormatException {
+    public void shouldHaveAnimalInSnapshot() throws ParseException, InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -130,7 +131,7 @@ public class StorageParserTest {
     }
 
     @Test(expected = InvalidFormatException.class)
-    public void shouldThrowInvalidFormatExceptionWhenIdIsInvalid() throws InvalidFormatException {
+    public void shouldThrowInvalidFormatExceptionWhenIdIsInvalid() throws InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749\n" +
                         "2016/09/02 22:30:46\n" +
@@ -147,7 +148,7 @@ public class StorageParserTest {
     }
 
     @Test(expected = InvalidFormatException.class)
-    public void shouldThrowInvalidFormatExceptionWhenDateIsInvalid() throws InvalidFormatException {
+    public void shouldThrowInvalidFormatExceptionWhenDateIsInvalid() throws InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02\n" +
@@ -164,7 +165,7 @@ public class StorageParserTest {
     }
 
     @Test(expected = InvalidFormatException.class)
-    public void shouldThrowInvalidFormatExceptionWhenAnimalFormatIsInvalid() throws InvalidFormatException {
+    public void shouldThrowInvalidFormatExceptionWhenAnimalFormatIsInvalid() throws InvalidFormatException, ConflictException {
         historyData =
                 "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
                         "2016/09/02 22:30:46\n" +
@@ -176,6 +177,22 @@ public class StorageParserTest {
                         "dcfa0c7a-5855-4ed2-bc8c-4accae8bd155\n" +
                         "2016/09/02 22:31:02\n" +
                         "cat1 12 8 3 4\n";
+        storageParser.parse(historyData);
+    }
+
+    @Test(expected = ConflictException.class)
+    public void shouldThrowConflictExceptionWhenAnimalDataIsNotCorrect() throws ConflictException, InvalidFormatException {
+        historyData =
+                "e4e87cb2-8e9a-4749-abb6-26c59344dfee\n" +
+                        "2016/09/02 22:30:46\n" +
+                        "cat1 10 9\n" +
+                        "351055db-33e6-4f9b-bfe1-16f1ac446ac1\n" +
+                        "2016/09/02 22:30:52\n" +
+                        "cat1 10 9 2 -1\n" +
+                        "cat2 2 3\n" +
+                        "dcfa0c7a-5855-4ed2-bc8c-4accae8bd155\n" +
+                        "2016/09/02 22:31:02\n" +
+                        "cat1 11 8 3 4";
         storageParser.parse(historyData);
     }
 

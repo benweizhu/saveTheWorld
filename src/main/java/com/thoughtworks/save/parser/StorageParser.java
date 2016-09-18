@@ -1,5 +1,6 @@
 package com.thoughtworks.save.parser;
 
+import com.thoughtworks.save.exception.ConflictException;
 import com.thoughtworks.save.exception.InvalidFormatException;
 import com.thoughtworks.save.model.Snapshot;
 import com.thoughtworks.save.validator.AnimalValidator;
@@ -24,7 +25,7 @@ public class StorageParser {
         this.animalParser = animalParser;
     }
 
-    public List<Snapshot> parse(String historyData) throws InvalidFormatException {
+    public List<Snapshot> parse(String historyData) throws InvalidFormatException, ConflictException {
         ArrayList<Snapshot> snapshots = new ArrayList<>();
         String[] historyDataRows = historyData.split(NEW_LINE);
         Snapshot newSnapshot = new Snapshot();
