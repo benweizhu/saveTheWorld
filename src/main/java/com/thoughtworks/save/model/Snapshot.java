@@ -23,7 +23,22 @@ public class Snapshot {
     }
 
     public void addAnimal(Animal animal) {
+        boolean breakPoint = false;
+        for (Animal existedAnimal : animals) {
+            if(animal.getName().equals(existedAnimal.getName())){
+                existedAnimal.setX(animal.getX());
+                existedAnimal.setY(animal.getY());
+                existedAnimal.setxOffset(animal.getxOffset());
+                existedAnimal.setyOffset(animal.getyOffset());
+                breakPoint = true;
+            }
+        }
+        if(breakPoint) return;
         this.animals.add(animal);
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
     }
 
     public void setId(String id) {

@@ -1,6 +1,6 @@
 package com.thoughtworks.save.model;
 
-public class Animal {
+public class Animal implements Cloneable{
 
     private String name;
     private int x;
@@ -54,5 +54,16 @@ public class Animal {
 
     public int getCalculatedY() {
         return this.y + this.yOffset;
+    }
+
+    @Override
+    public Animal clone() throws CloneNotSupportedException {
+        Animal animal = new Animal();
+        animal.setName(this.name);
+        animal.setX(this.x);
+        animal.setY(this.y);
+        animal.setxOffset(this.xOffset);
+        animal.setyOffset(this.yOffset);
+        return animal;
     }
 }
